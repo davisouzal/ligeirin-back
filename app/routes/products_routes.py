@@ -115,14 +115,14 @@ def get_product_by_id(product_id):
 def get_products_by_category():
     """
     Retorna produtos agrupados por categoria.
-    Se passado ?name=<categoria>, retorna apenas aquela.
+    Se passado ?categoryId=<id>, retorna apenas aquela categoria.
     """
     try:
-        category_name = request.args.get("name")
+        category_id = request.args.get("categoryId", type=int)
 
         query = db.session.query(ProductCategory)
-        if category_name:
-            query = query.filter(ProductCategory.name.ilike(f"%{category_name}%"))
+        if category_id:
+            query = query.filter(ProductCategory.id == category_id)
 
         categories = query.all()
 
