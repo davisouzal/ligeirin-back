@@ -106,7 +106,18 @@ with app.app_context():
         color="AMARELO",
         stock=20
     )
-    db.session.add_all([sp_detail1, sp_detail2])
+    sp_detail3 = SellerProductDetails(
+        seller_product_id=sp3.id,
+        color="ROXO",
+        stock=20
+    )
+    sp_detail4 = SellerProductDetails(
+        seller_product_id=sp4.id,
+        color="CINZA",
+        stock=20
+    )
+    
+    db.session.add_all([sp_detail1, sp_detail2, sp_detail3, sp_detail4])
     db.session.commit()
 
     # Pedido
