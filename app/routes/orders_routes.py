@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from app.models import Client, Order, OrderProduct, SellerProduct, Product, ProductCategory, Seller, SellerProductDetails
 from app import db
+from datetime import datetime
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
@@ -113,6 +114,7 @@ def get_order_by_id(order_id):
 
     result = {
         "orderId": order.id,
+        "status": order.status,
         "clientId": order.client_id,
         "createdAt": order.created_at,
         "completeDate": order.complete_date,
@@ -120,3 +122,36 @@ def get_order_by_id(order_id):
     }
 
     return jsonify(result), 200
+
+@orders_bp.route('/<int:order_id>', methods=['PUT'])
+def update_order(order_id):
+    """
+    Atualiza o status e as informações de pagamento um pedido existente.
+    """
+    try:
+        order = db.session.query(Order).get(order_id)
+        if not order:
+            return jsonify({"error": "Pedido não encontrado"}), 404
+
+        if order.status == "COMPLETED":
+            return jsonify({"error": "Não é possível alterar pedidos já completados"}), 403
+
+        data = request.get_json()
+
+        status = data.get("status")
+        payment_method = data.get("paymentMethod")
+        if status:
+            order.status = status
+            if status == "ON GOING":
+                order.complete_date = datetime.now()
+        if payment_method:
+            order.payment_method = payment_method
+
+        db.session.commit()
+
+        return jsonify({"message": "Pedido atualizado com sucesso", "orderId": order.id}), 200
+
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500

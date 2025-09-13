@@ -270,7 +270,26 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 }
 ```
 
-## 6. Obter o carrinho de uma pessoa
+## 6. Atualizar o pedido específico
+ - Rota: /orders/<int:order_id>
+ - Método: PUT
+ - Descrição: Atualiza o status e as informações de pagamento um pedido existente.
+ - Exemplo de Entrada:
+ ```
+{
+	"status": "ON GOING",
+	"paymentMethod": "PIX"
+}
+ ```
+ - Exemplo de Resposta:
+ ```
+{
+	"message": "Pedido atualizado com sucesso",
+	"orderId": 2
+}
+```
+
+## 7. Obter o carrinho de uma pessoa
  - Rota: /cart/client/<int:client_id>
  - Método: GET
  - Descrição: Retorna o carrinho de um cliente com seus produtos,
@@ -309,7 +328,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 }
 ```
 
-## 7. Atualizar o carrinho de uma pessoa
+## 8. Atualizar o carrinho de uma pessoa
  - Rota: /cart/client/<int:client_id>
  - Método: PUT
  - Descrição: Atualiza o carrinho de um cliente com base nos produtos enviados e em caso de não existir ele cria o carrinho.
@@ -330,7 +349,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 }
 ```
 
-## 8. Obter o carrinho de uma pessoa
+## 9. Obter o carrinho de uma pessoa
  - Rota: /cart/<int:order_id>/product/<int:product_id>
  - Método: DELETE
  - Descrição: Retira o produto especificado do carrinho especificado
@@ -341,7 +360,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 }
 ```
 
-## 9. Obter um cliente especefico
+## 10. Obter um cliente especefico
  - Rota: /client/<int:client_id>
  - Método: GET
  - Descrição: Retorna um cliente específico,
