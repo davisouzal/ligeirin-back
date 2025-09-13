@@ -38,15 +38,17 @@ with app.app_context():
     db.session.commit()
 
     # Categoria de produto
-    pc1 = ProductCategory(name="Roupas", icon="http://exemplo.com/icons/roupa.jpg")
-    pc2 = ProductCategory(name="Ferramentas", icon="http://exemplo.com/icons/ferramenta.jpg")
+    pc1 = ProductCategory(name="Roupas", icon="shirt-outline")
+    pc2 = ProductCategory(name="Ferramentas", icon="build-outline")
     db.session.add_all([pc1, pc2])
     db.session.commit()
 
     # Produto
     product1 = Product(category_id=pc1.id, name="Camiseta")
     product2 = Product(category_id=pc2.id, name="Chave de Fenda")
-    db.session.add_all([product1, product2])
+    product3 = Product(category_id=pc1.id, name="Boné")
+    product4 = Product(category_id=pc1.id, name="Martelo")
+    db.session.add_all([product1, product2, product3, product4])
     db.session.commit()
 
     # SellerProduct
@@ -57,7 +59,7 @@ with app.app_context():
         product_id=product1.id,
         description="Camiseta confortável de algodão",
         care_level="BAIXO",
-        image="http://exemplo.com/imagens/camiseta.jpg",
+        image="https://cdn.awsli.com.br/600x1000/1154/1154659/produto/161909164/005c94be4f.jpg",
         price=59.90
     )
     sp2 = SellerProduct(
@@ -67,10 +69,29 @@ with app.app_context():
         product_id=product2.id,
         description="Chave de Fenda Magnética e Confiável",
         care_level="MEDIO",
-        image="http://exemplo.com/imagens/chave_de_fenda.jpg",
+        image="https://cdn.leroymerlin.com.br/products/chave_de_fenda_phillips_ponta_magnetica_imantada_ima_grande_c_1571229180_d169_600x600.jpg",
         price=20.0
     )
-    db.session.add_all([sp1, sp2])
+    sp3 = SellerProduct(
+        title="Bone massa",
+        brand="Nike",
+        seller_id=seller1.id,
+        product_id=product3.id,
+        description="Bone muito legal da nike",
+        care_level="BAIXO",
+        image="https://cdn.discordapp.com/attachments/1416162813637955624/1416569320062062743/21YVNPVXGqS._SY1000_.jpg?ex=68c7527c&is=68c600fc&hm=11ca13afc4ac0c39ac2558fa6db47c6afddecb4c9f12e7c354aa9e389687d481&",
+        price=59.90
+    )
+    sp4 = SellerProduct(
+        title="Martelo",
+        brand="Bosch",
+        seller_id=seller2.id,
+        product_id=product4.id,
+        description="Martelo quebra tudo",
+        care_level="BAIXO",
+        image="https://cdn.discordapp.com/attachments/1416162813637955624/1416569533837344779/267270.webp?ex=68c752af&is=68c6012f&hm=c9085a81a94db1f57c581152ab54da85751c1741cd41fa5e0986635fff0e2c07&",
+    )
+    db.session.add_all([sp1, sp2, sp3, sp4])
     db.session.commit()
 
     # Detalhes do produto

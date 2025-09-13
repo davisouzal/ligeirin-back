@@ -26,23 +26,26 @@ def get_client_cart(client_id):
 
         if not draft_order:
             return jsonify({"message": "Nenhum carrinho encontrado"}), 404
+        
+        seller = {}
 
         products = []
         for op in draft_order.order_products:
             sp = op.seller_product
+            seller = {
+                "id": sp.seller.id,
+                "userId": sp.seller.user.id,
+                "image": sp.seller.user.image,
+                "fantasyName": sp.seller.user.name,
+                "companyName": sp.seller.company_name
+            }
             products.append({
                 "id": sp.id,
                 "title": sp.title,
                 "brand": sp.brand,
                 "price": float(sp.price),
                 "quantity": op.quantity,
-                "seller": {
-                    "sellerId": sp.seller.id,
-                    "userId": sp.seller.user.id,
-                    "image": sp.seller.user.image,
-                    "fantasyName": sp.seller.user.name,
-                    "companyName": sp.seller.company_name
-                },
+                "image": sp.image,
                 "details": [
                     {
                         "color": d.color,
@@ -54,12 +57,14 @@ def get_client_cart(client_id):
             })
 
         result = {
-            "orderId": draft_order.id,
+            "id": draft_order.id,
             "totalPrice": float(draft_order.total_price),
+            "status": draft_order.status,
             "userId": draft_order.client.user.id,
             "clientId": draft_order.client_id,
             "createdAt": draft_order.created_at,
-            "products": products
+            "products": products,
+            "seller": seller
         }
 
         return jsonify(result), 200
