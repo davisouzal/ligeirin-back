@@ -1,3 +1,4 @@
+from sqlalchemy.sql import func
 from app import db
 
 class User(db.Model):
@@ -8,6 +9,7 @@ class User(db.Model):
     address = db.Column(db.String(45))
     identifier = db.Column(db.String(45))
     document_path = db.Column(db.String(45))
+    image = db.Column(db.String(50))
 
     seller = db.relationship("Seller", back_populates="user", lazy=True)
     driver = db.relationship("Driver", back_populates="user", lazy=True)
@@ -41,7 +43,7 @@ class Driver(db.Model):
 class Seller(db.Model):
     __tablename__ = "seller"
     id = db.Column(db.Integer, primary_key=True)
-    real_name = db.Column(db.String(45))
+    company_name = db.Column(db.String(45))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     banking_info_id = db.Column(db.Integer, db.ForeignKey("banking_info.id"))
 
@@ -89,7 +91,7 @@ class SellerProduct(db.Model):
 class SellerProductDetails(db.Model):
     __tablename__ = "seller_product_details"
     id = db.Column(db.Integer, primary_key=True)
-    seller_product_id = db.Column(db.String(45), db.ForeignKey("seller_product.id"))
+    seller_product_id = db.Column(db.Integer, db.ForeignKey("seller_product.id"))
     color = db.Column(db.Enum("VERMELHO", "BRANCO", "AMARELO", "LARANJA", "VERDE", "AZUL", "CINZA", "ROSA", "ROXO", "BEGE"  ))
     size = db.Column(db.Enum("PP", "P", "M", "G", "GG", "XG", "XG1", "XG2", "XG3")) 
     stock = db.Column(db.Integer)
@@ -124,11 +126,12 @@ class Order(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     total_price = db.Column(db.Numeric(15, 2))
     payment_method = db.Column(db.Enum("CARTAO", "PIX"))
-    status = db.Column(db.Enum("COMPLETED", "DRAFT"))
-    complete_date = db.Column(db.String(45))
+    status = db.Column(db.Enum("COMPLETED", "DRAFT"), default = "DRAFT")
+    complete_date = db.Column(db.DateTime(timezone=True))
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     client = db.relationship("Client", back_populates="orders")
-    products = db.relationship("OrderProduct", back_populates="order")
+    order_products = db.relationship("OrderProduct", back_populates="order")
 
 
 class OrderProduct(db.Model):
@@ -138,6 +141,6 @@ class OrderProduct(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
     seller_product_id = db.Column(db.String(45), db.ForeignKey("seller_product.id"))
 
-    order = db.relationship("Order", back_populates="products")
+    order = db.relationship("Order", back_populates="order_products")
     seller_product = db.relationship("SellerProduct", back_populates="order_products")
 
