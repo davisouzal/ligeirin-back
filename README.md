@@ -1,0 +1,91 @@
+# Projeto Ligeirin - Backend
+
+Este é o backend do projeto **Ligeirin**, uma API REST desenvolvida em Flask, utilizando
+SQLAlchemy como ORM e Flask-Migrate para controle de migrações do banco de dados.
+Atualmente, a API disponibiliza um endpoint de listagem de produtos dos vendedores.
+## Requisitos
+
+-   **Python 3.8 ou superior**
+-   **Flask**
+
+## Instruções para Instalação
+
+### 1. Clone o repositório
+`git clone https://github.com/davisouzal/ligeirin-back.git`
+`cd ligeirin-back` 
+
+### 2. Crie um ambiente virtual (recomendado)
+
+#### No Windows:
+
+`python -m venv venv`
+`venv\Scripts\activate` 
+
+#### No Linux:
+
+`python3 -m venv venv`
+`source venv/bin/activate` 
+
+### 3. Instale as dependências
+
+Com o ambiente virtual ativado, execute:
+
+`pip install -r requirements.txt` 
+
+> Nota: Certifique-se de que o arquivo `requirements.txt` contenha as bibliotecas necessárias, como Flask e outras.
+
+## Executando a aplicação
+
+Após instalar as dependências, você pode iniciar a aplicação localmente.
+
+#### No Windows:
+
+`set FLASK_APP=run`
+`set FLASK_ENV=development`
+`flask run`
+
+#### No Linux:
+`export FLASK_APP=run`
+`export FLASK_ENV=development`
+`flask run` 
+
+>Obs: Tabém pode rodar no modo debug:  `flask --app app --debug run`
+
+Isso iniciará o servidor Flask em modo de desenvolvimento na porta `5000`. Acesse a aplicação via navegador no endereço `http://127.0.0.1:5000`.
+
+# Rotas da API
+
+## 1. Obter todos os produtos do catalogo
+ - Rota: /products
+ - Método: GET
+ - Descrição: Retorna todos os produtos cadastrados pelos vendedores,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Exemplo de Resposta:
+ ```
+[
+  {
+    "id": "123-abc",
+    "description": "Camiseta básica",
+    "care_level": "BAIXO",
+    "product": {
+      "id": 1,
+      "name": "Camiseta",
+      "category": {
+        "id": 10,
+        "name": "Roupas"
+      }
+    },
+    "seller": {
+      "id": 5,
+      "real_name": "Loja do João"
+    },
+    "details": {
+      "id": 99,
+      "color": "AZUL",
+      "size": "M",
+      "stock": 50,
+      "price": 59.90
+    }
+  }
+]
+```
