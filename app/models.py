@@ -70,11 +70,15 @@ class Product(db.Model):
 
 class SellerProduct(db.Model):
     __tablename__ = "seller_product"
-    id = db.Column(db.String(45), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(45))
+    brand = db.Column(db.String(45))
     seller_id = db.Column(db.Integer, db.ForeignKey("seller.id"))
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
     description = db.Column(db.String(255))
     care_level = db.Column(db.Enum("BAIXO", "MEDIO", "ALTO"))
+    image = db.Column(db.String(100))
+    price = db.Column(db.Numeric(10, 0))
 
     seller = db.relationship("Seller", back_populates="products")
     product = db.relationship("Product", back_populates="seller_products")
@@ -89,7 +93,6 @@ class SellerProductDetails(db.Model):
     color = db.Column(db.Enum("VERMELHO", "BRANCO", "AMARELO", "LARANJA", "VERDE", "AZUL", "CINZA", "ROSA", "ROXO", "BEGE"  ))
     size = db.Column(db.Enum("PP", "P", "M", "G", "GG", "XG", "XG1", "XG2", "XG3")) 
     stock = db.Column(db.Integer)
-    price = db.Column(db.Numeric(10, 0))
 
     seller_product = db.relationship("SellerProduct", back_populates="details")
 

@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 93d5db7bc07f
+Revision ID: 9c7077e31dff
 Revises: 
-Create Date: 2025-09-12 23:58:06.950518
+Create Date: 2025-09-13 11:10:25.888048
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '93d5db7bc07f'
+revision = '9c7077e31dff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -92,11 +92,15 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('seller_product',
-    sa.Column('id', sa.String(length=45), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=45), nullable=True),
+    sa.Column('brand', sa.String(length=45), nullable=True),
     sa.Column('seller_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.Column('description', sa.String(length=255), nullable=True),
     sa.Column('care_level', sa.Enum('BAIXO', 'MEDIO', 'ALTO'), nullable=True),
+    sa.Column('image', sa.String(length=100), nullable=True),
+    sa.Column('price', sa.Numeric(precision=10, scale=0), nullable=True),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.ForeignKeyConstraint(['seller_id'], ['seller.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -116,7 +120,6 @@ def upgrade():
     sa.Column('color', sa.Enum('VERMELHO', 'BRANCO', 'AMARELO', 'LARANJA', 'VERDE', 'AZUL', 'CINZA', 'ROSA', 'ROXO', 'BEGE'), nullable=True),
     sa.Column('size', sa.Enum('PP', 'P', 'M', 'G', 'GG', 'XG', 'XG1', 'XG2', 'XG3'), nullable=True),
     sa.Column('stock', sa.Integer(), nullable=True),
-    sa.Column('price', sa.Numeric(precision=10, scale=0), nullable=True),
     sa.ForeignKeyConstraint(['seller_product_id'], ['seller_product.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

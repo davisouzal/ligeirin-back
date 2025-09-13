@@ -63,29 +63,109 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
  - Exemplo de Resposta:
  ```
 [
+	{
+		"care_level": "BAIXO",
+		"description": "Camiseta confortável de algodão",
+		"details": {
+			"color": "AZUL",
+			"id": 1,
+			"size": "M",
+			"stock": 100
+		},
+		"id": 1,
+		"image": "http://exemplo.com/imagens/camiseta.jpg",
+		"price": "60",
+		"product": {
+			"category": {
+				"id": 1,
+				"name": "Roupas"
+			},
+			"id": 1,
+			"name": "Camiseta"
+		},
+		"seller": {
+			"id": 1,
+			"real_name": "Loja do João"
+		},
+		"title": "Camiseta Básica Azul"
+	}
+]
+```
+
+## 3. Obter produtos específico do catálogo
+ - Rota: /products/<int:id>
+ - Método: GET
+ - Descrição: Retorna o produtos especifico requisitado,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Exemplo de Resposta:
+ ```
+{
+	"care_level": "BAIXO",
+	"description": "Camiseta confortável de algodão",
+	"details": [
+		{
+			"color": "AZUL",
+			"id": 1,
+			"size": "M",
+			"stock": 100
+		}
+	],
+	"id": 1,
+	"image": "http://exemplo.com/imagens/camiseta.jpg",
+	"price": "60",
+	"product": {
+		"category": {
+			"id": 1,
+			"name": "Roupas"
+		},
+		"id": 1,
+		"name": "Camiseta"
+	},
+	"seller": {
+		"id": 1,
+		"real_name": "Loja do João"
+	},
+	"title": "Camiseta Básica Azul"
+}
+```
+
+## 3. Obter produtos específico do catálogo
+ - Rota: /products/category
+ - Método: GET
+ - Descrição: Retorna todos os produtos cadastrados pelos vendedores agrupados por categorias,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Query (opcional): Retorna os produtos da categoria especificada
+ - Exemplo de query
   {
-    "id": "123-abc",
-    "description": "Camiseta básica",
-    "care_level": "BAIXO",
-    "product": {
-      "id": 1,
-      "name": "Camiseta",
-      "category": {
-        "id": 10,
-        "name": "Roupas"
-      }
-    },
-    "seller": {
-      "id": 5,
-      "real_name": "Loja do João"
-    },
-    "details": {
-      "id": 99,
-      "color": "AZUL",
-      "size": "M",
-      "stock": 50,
-      "price": 59.90
-    }
+  name: 'Roupas'
   }
+ - Exemplo de Resposta:
+ ```
+[
+	{
+		"name": "Roupas",
+		"products": [
+			{
+				"care_level": "BAIXO",
+				"description": "Camiseta confortável de algodão",
+				"details": [
+					{
+						"color": "AZUL",
+						"id": 1,
+						"size": "M",
+						"stock": 100
+					}
+				],
+				"id": 1,
+				"image": "http://exemplo.com/imagens/camiseta.jpg",
+				"price": "60",
+				"seller": {
+					"id": 1,
+					"real_name": "Loja do João"
+				},
+				"title": "Camiseta Básica Azul"
+			}
+		]
+	}
 ]
 ```
