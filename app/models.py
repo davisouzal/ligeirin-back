@@ -115,6 +115,7 @@ class CardInfo(db.Model):
     expiration_date = db.Column(db.String(45))
     number = db.Column(db.Integer)
     security_code = db.Column(db.Integer)
+    brand = db.Column(db.String(45))
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
 
     client = db.relationship("Client", back_populates="card_infos")
@@ -126,7 +127,7 @@ class Order(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     total_price = db.Column(db.Numeric(15, 2))
     payment_method = db.Column(db.Enum("CARTAO", "PIX"))
-    status = db.Column(db.Enum("COMPLETED", "DRAFT"), default = "DRAFT")
+    status = db.Column(db.Enum("COMPLETED", "ON GOING", "DRAFT"), default = "DRAFT")
     complete_date = db.Column(db.DateTime(timezone=True))
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 

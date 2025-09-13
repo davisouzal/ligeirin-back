@@ -232,7 +232,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 ]
 ```
 
-## . Obter um pedido especifico
+## 5. Obter um pedido especifico
  - Rota: /orders/<int:id>
  - Método: GET
  - Descrição: Retorna todas as informacões do pedido em especifico,
@@ -267,5 +267,96 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 			"title": "Camiseta Básica Azul"
 		}
 	]
+}
+```
+
+## 6. Obter o carrinho de uma pessoa
+ - Rota: /cart/client/<int:client_id>
+ - Método: GET
+ - Descrição: Retorna o carrinho de um cliente com seus produtos,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Exemplo de Resposta:
+ ```
+{
+	"clientId": 1,
+	"createdAt": "Sat, 13 Sep 2025 18:33:28 GMT",
+	"orderId": 2,
+	"products": [
+		{
+			"brand": "Bosch",
+			"details": [
+				{
+					"color": "AMARELO",
+					"size": null,
+					"stock": 20
+				}
+			],
+			"id": 2,
+			"price": 20.0,
+			"quantity": 1,
+			"seller": {
+				"companyName": "Distribuicão de ferramentas pau pra toda obra",
+				"fantasyName": "Alexandre das Ferramentas",
+				"image": "http://exemplo.com/imagens/ferramentas_alexandre.jpg",
+				"sellerId": 2,
+				"userId": 2
+			},
+			"title": "Chave de Fenda Magnética"
+		}
+	],
+	"totalPrice": 20.0,
+	"userId": 3
+}
+```
+
+## 7. Atualizar o carrinho de uma pessoa
+ - Rota: /cart/client/<int:client_id>
+ - Método: PUT
+ - Descrição: Atualiza o carrinho de um cliente com base nos produtos enviados e em caso de não existir ele cria o carrinho.
+ - Exemplo de Entrada:
+ ```
+[
+	{
+		"seller_product_id": 1, 
+		"quantity": 3
+	}
+]
+ ```
+ - Exemplo de Resposta:
+ ```
+{
+	"message": "Carrinho atualizado com sucesso",
+	"orderId": 3
+}
+```
+
+## 8. Obter o carrinho de uma pessoa
+ - Rota: /cart/<int:order_id>/product/<int:product_id>
+ - Método: DELETE
+ - Descrição: Retira o produto especificado do carrinho especificado
+ - Exemplo de Resposta:
+ ```
+{
+	"message": "Produto removido"
+}
+```
+
+## 9. Obter um cliente especefico
+ - Rota: /client/<int:client_id>
+ - Método: GET
+ - Descrição: Retorna um cliente específico,
+incluindo informações detalhadas sobre cartões cadastrados.
+ - Exemplo de Resposta:
+ ```
+{
+	"address": "Rua B, 456",
+	"cards": [],
+	"clientId": 1,
+	"document_path": null,
+	"identifier": "98765432100",
+	"image": "http://exemplo.com/imagens/maria_compradora.jpg",
+	"name": "Maria Compradora",
+	"phone": "11988888888",
+	"userId": 3
 }
 ```

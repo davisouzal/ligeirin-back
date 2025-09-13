@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: dcaba7cee7f4
+Revision ID: 03ca014df6d6
 Revises: 
-Create Date: 2025-09-13 12:32:24.366942
+Create Date: 2025-09-13 15:38:41.092535
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dcaba7cee7f4'
+revision = '03ca014df6d6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -78,6 +78,7 @@ def upgrade():
     sa.Column('expiration_date', sa.String(length=45), nullable=True),
     sa.Column('number', sa.Integer(), nullable=True),
     sa.Column('security_code', sa.Integer(), nullable=True),
+    sa.Column('brand', sa.String(length=45), nullable=True),
     sa.Column('client_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['client.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -87,7 +88,7 @@ def upgrade():
     sa.Column('client_id', sa.Integer(), nullable=True),
     sa.Column('total_price', sa.Numeric(precision=15, scale=2), nullable=True),
     sa.Column('payment_method', sa.Enum('CARTAO', 'PIX'), nullable=True),
-    sa.Column('status', sa.Enum('COMPLETED', 'DRAFT'), nullable=True),
+    sa.Column('status', sa.Enum('COMPLETED', 'ON GOING', 'DRAFT'), nullable=True),
     sa.Column('complete_date', sa.DateTime(timezone=True), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['client.id'], ),

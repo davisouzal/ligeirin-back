@@ -17,6 +17,9 @@ def get_all_clients_orders(client_id):
 
         orders_data = []
         for order in client.orders:
+            if order.status == "DRAFT":
+                continue
+
             order_info = {
                 "id": order.id,
                 "totalPrice": float(order.total_price),
