@@ -38,8 +38,8 @@ with app.app_context():
     db.session.commit()
 
     # Categoria de produto
-    pc1 = ProductCategory(name="Roupas")
-    pc2 = ProductCategory(name="Ferramentas")
+    pc1 = ProductCategory(name="Roupas", icon="http://exemplo.com/icons/roupa.jpg")
+    pc2 = ProductCategory(name="Ferramentas", icon="http://exemplo.com/icons/ferramenta.jpg")
     db.session.add_all([pc1, pc2])
     db.session.commit()
 

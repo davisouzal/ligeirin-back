@@ -149,6 +149,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
  ```
 [
 	{
+		"id": 1,
 		"name": "Roupas",
 		"products": [
 			{
@@ -378,4 +379,19 @@ incluindo informações detalhadas sobre cartões cadastrados.
 	"phone": "11988888888",
 	"userId": 3
 }
+```
+
+## 11. Obter todas as categorias
+ - Rota: /categories
+ - Método: GET
+ - Descrição: Retorna todas as categorias cadastadas no sistema
+ - Exemplo de Resposta:
+ ```
+[
+	{
+		"icon": "http://exemplo.com/icons/roupa.jpg",
+		"id": 1,
+		"name": "Roupas"
+	}
+]
 ```

@@ -158,6 +158,7 @@ def get_products_by_category():
                     products_list.append(product_data)
 
             result.append({
+                "id": category.id,
                 "name": category.name,
                 "products": products_list
             })
