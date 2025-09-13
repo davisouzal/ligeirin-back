@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint
 from .products_routes import products_bp
+from.orders_routes import orders_bp
 
 main_bp = Blueprint('main', __name__, url_prefix='/api')
 
@@ -15,3 +16,5 @@ def register_routes(app):
     # Registro dos Blueprints
     app.register_blueprint(main_bp)
     app.register_blueprint(products_bp)
+    app.register_blueprint(orders_bp)
+    

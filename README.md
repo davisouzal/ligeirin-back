@@ -64,7 +64,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
  ```
 [
 	{
-		"care_level": "BAIXO",
+		"careLevel": "BAIXO",
 		"description": "Camiseta confortável de algodão",
 		"details": {
 			"color": "AZUL",
@@ -74,7 +74,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 		},
 		"id": 1,
 		"image": "http://exemplo.com/imagens/camiseta.jpg",
-		"price": "60",
+		"price": 60.0,
 		"product": {
 			"category": {
 				"id": 1,
@@ -84,15 +84,18 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 			"name": "Camiseta"
 		},
 		"seller": {
-			"id": 1,
-			"real_name": "Loja do João"
+			"companyName": "Distribuicão de alimentos divinos",
+			"fantasyName": "João da Loja",
+			"image": "http://exemplo.com/imagens/mercearia_joao.jpg",
+			"sellerId": 1,
+			"userId": 1
 		},
 		"title": "Camiseta Básica Azul"
 	}
 ]
 ```
 
-## 3. Obter produtos específico do catálogo
+## 2. Obter produtos específico do catálogo
  - Rota: /products/<int:id>
  - Método: GET
  - Descrição: Retorna o produtos especifico requisitado,
@@ -100,7 +103,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
  - Exemplo de Resposta:
  ```
 {
-	"care_level": "BAIXO",
+	"careLevel": "BAIXO",
 	"description": "Camiseta confortável de algodão",
 	"details": [
 		{
@@ -112,7 +115,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 	],
 	"id": 1,
 	"image": "http://exemplo.com/imagens/camiseta.jpg",
-	"price": "60",
+	"price": 60.0,
 	"product": {
 		"category": {
 			"id": 1,
@@ -122,8 +125,11 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 		"name": "Camiseta"
 	},
 	"seller": {
-		"id": 1,
-		"real_name": "Loja do João"
+		"companyName": "Distribuicão de alimentos divinos",
+		"fantasyName": "João da Loja",
+		"image": "http://exemplo.com/imagens/mercearia_joao.jpg",
+		"sellerId": 1,
+		"userId": 1
 	},
 	"title": "Camiseta Básica Azul"
 }
@@ -146,7 +152,7 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 		"name": "Roupas",
 		"products": [
 			{
-				"care_level": "BAIXO",
+				"careLevel": "BAIXO",
 				"description": "Camiseta confortável de algodão",
 				"details": [
 					{
@@ -158,14 +164,108 @@ incluindo informações detalhadas sobre categoria, vendedor e variações do pr
 				],
 				"id": 1,
 				"image": "http://exemplo.com/imagens/camiseta.jpg",
-				"price": "60",
+				"price": 60.0,
 				"seller": {
-					"id": 1,
-					"real_name": "Loja do João"
+					"companyName": "Distribuicão de alimentos divinos",
+					"fantasyName": "João da Loja",
+					"image": "http://exemplo.com/imagens/mercearia_joao.jpg",
+					"sellerId": 1,
+					"userId": 1
 				},
 				"title": "Camiseta Básica Azul"
 			}
 		]
 	}
 ]
+```
+
+## 4. Obter todos os pedidos de um cliente
+ - Rota: /orders/client/<int:id>
+ - Método: GET
+ - Descrição: Retorna todos os pedidos realizados por um cliente,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Exemplo de Resposta:
+ ```
+[
+	{
+		"completeDate": "Sat, 13 Sep 2025 12:32:25 GMT",
+		"createdAt": "Sat, 13 Sep 2025 15:32:25 GMT",
+		"id": 1,
+		"paymentMethod": "PIX",
+		"products": [
+			{
+				"careLevel": "BAIXO",
+				"description": "Camiseta confortável de algodão",
+				"details": [
+					{
+						"color": "AZUL",
+						"id": 1,
+						"size": "M",
+						"stock": 100
+					}
+				],
+				"id": 1,
+				"image": "http://exemplo.com/imagens/camiseta.jpg",
+				"price": 60.0,
+				"product": {
+					"category": {
+						"id": 1,
+						"name": "Roupas"
+					},
+					"id": 1,
+					"name": "Camiseta"
+				},
+				"quantity": 2,
+				"seller": {
+					"companyName": "Distribuicão de alimentos divinos",
+					"fantasyName": "João da Loja",
+					"image": "http://exemplo.com/imagens/mercearia_joao.jpg",
+					"sellerId": 1,
+					"userId": 1
+				},
+				"title": "Camiseta Básica Azul"
+			}
+		],
+		"status": "COMPLETED",
+		"totalPrice": 120.0
+	}
+]
+```
+
+## . Obter um pedido especifico
+ - Rota: /orders/<int:id>
+ - Método: GET
+ - Descrição: Retorna todas as informacões do pedido em especifico,
+incluindo informações detalhadas sobre categoria, vendedor e variações do produto.
+ - Exemplo de Resposta:
+ ```
+{
+	"clientId": 1,
+	"completeDate": "Sat, 13 Sep 2025 12:32:25 GMT",
+	"createdAt": "Sat, 13 Sep 2025 15:32:25 GMT",
+	"orderId": 1,
+	"products": [
+		{
+			"brand": "Genérica",
+			"details": [
+				{
+					"color": "AZUL",
+					"size": "M",
+					"stock": 100
+				}
+			],
+			"id": 1,
+			"price": 60.0,
+			"quantity": 2,
+			"seller": {
+				"companyName": "Distribuicão de alimentos divinos",
+				"fantasyName": "João da Loja",
+				"image": "http://exemplo.com/imagens/mercearia_joao.jpg",
+				"sellerId": 1,
+				"userId": 1
+			},
+			"title": "Camiseta Básica Azul"
+		}
+	]
+}
 ```

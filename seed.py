@@ -1,4 +1,5 @@
 from app import create_app, db
+import datetime
 from app.models import (
     User, BankingInfo, Driver, Seller, ProductCategory,
     Product, SellerProduct, SellerProductDetails, Client,
@@ -7,13 +8,12 @@ from app.models import (
 
 app = create_app()
 with app.app_context():
-    # Limpar dados antigos (opcional)
     db.drop_all()
     db.create_all()
 
     # Criar usuários
-    user_seller = User(name="João da Loja", phone="11999999999", address="Rua A, 123", identifier="12345678901")
-    user_client = User(name="Maria Compradora", phone="11988888888", address="Rua B, 456", identifier="98765432100")
+    user_seller = User(name="João da Loja", phone="11999999999", address="Rua A, 123", identifier="12345678901", image="http://exemplo.com/imagens/mercearia_joao.jpg")
+    user_client = User(name="Maria Compradora", phone="11988888888", address="Rua B, 456", identifier="98765432100", image="http://exemplo.com/imagens/maria_compradora.jpg")
     db.session.add_all([user_seller, user_client])
     db.session.commit()
 
@@ -22,12 +22,12 @@ with app.app_context():
     db.session.add(bank_info)
     db.session.commit()
 
-    # Seller vinculado ao user e ao banking_info
-    seller = Seller(real_name="Loja do João", user_id=user_seller.id, banking_info_id=bank_info.id)
+    # Seller vinculado
+    seller = Seller(company_name="Distribuicão de alimentos divinos", user_id=user_seller.id, banking_info_id=bank_info.id)
     db.session.add(seller)
     db.session.commit()
 
-    # Client vinculado ao user
+    # Client vinculado
     client = Client(user_id=user_client.id)
     db.session.add(client)
     db.session.commit()
@@ -44,7 +44,6 @@ with app.app_context():
 
     # SellerProduct
     sp = SellerProduct(
-        id=1,
         title="Camiseta Básica Azul",
         brand="Genérica",
         seller_id=seller.id,
@@ -57,7 +56,7 @@ with app.app_context():
     db.session.add(sp)
     db.session.commit()
 
-    # Detalhes do SellerProduct
+    # Detalhes do produto
     sp_detail = SellerProductDetails(
         seller_product_id=sp.id,
         color="AZUL",
@@ -67,4 +66,24 @@ with app.app_context():
     db.session.add(sp_detail)
     db.session.commit()
 
-    print("✅ Banco populado com dados fictícios!")
+    # 🔹 Criar pedido
+    order = Order(
+        client_id=client.id,
+        total_price = 120,
+        status = "COMPLETED",
+        complete_date=datetime.datetime.now(),
+        payment_method = "PIX"
+    )
+    db.session.add(order)
+    db.session.commit()
+
+    # 🔹 Vincular produto ao pedido
+    order_product = OrderProduct(
+        order_id=order.id,
+        seller_product_id=sp.id,
+        quantity=2
+    )
+    db.session.add(order_product)
+    db.session.commit()
+
+    print("✅ Banco populado com dados fictícios incluindo pedidos!")

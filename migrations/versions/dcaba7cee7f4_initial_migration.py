@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 9c7077e31dff
+Revision ID: dcaba7cee7f4
 Revises: 
-Create Date: 2025-09-13 11:10:25.888048
+Create Date: 2025-09-13 12:32:24.366942
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9c7077e31dff'
+revision = 'dcaba7cee7f4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,6 +39,7 @@ def upgrade():
     sa.Column('address', sa.String(length=45), nullable=True),
     sa.Column('identifier', sa.String(length=45), nullable=True),
     sa.Column('document_path', sa.String(length=45), nullable=True),
+    sa.Column('image', sa.String(length=50), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('client',
@@ -65,7 +66,7 @@ def upgrade():
     )
     op.create_table('seller',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('real_name', sa.String(length=45), nullable=True),
+    sa.Column('company_name', sa.String(length=45), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('banking_info_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['banking_info_id'], ['banking_info.id'], ),
@@ -87,7 +88,8 @@ def upgrade():
     sa.Column('total_price', sa.Numeric(precision=15, scale=2), nullable=True),
     sa.Column('payment_method', sa.Enum('CARTAO', 'PIX'), nullable=True),
     sa.Column('status', sa.Enum('COMPLETED', 'DRAFT'), nullable=True),
-    sa.Column('complete_date', sa.String(length=45), nullable=True),
+    sa.Column('complete_date', sa.DateTime(timezone=True), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['client.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -116,7 +118,7 @@ def upgrade():
     )
     op.create_table('seller_product_details',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('seller_product_id', sa.String(length=45), nullable=True),
+    sa.Column('seller_product_id', sa.Integer(), nullable=True),
     sa.Column('color', sa.Enum('VERMELHO', 'BRANCO', 'AMARELO', 'LARANJA', 'VERDE', 'AZUL', 'CINZA', 'ROSA', 'ROXO', 'BEGE'), nullable=True),
     sa.Column('size', sa.Enum('PP', 'P', 'M', 'G', 'GG', 'XG', 'XG1', 'XG2', 'XG3'), nullable=True),
     sa.Column('stock', sa.Integer(), nullable=True),
